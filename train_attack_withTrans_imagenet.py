@@ -10,6 +10,10 @@ from torch import nn
 import torchvision
 import torchvision.transforms as transforms
 
+import sys
+
+sys.path.append('/kaggle/working/Effective_backdoor_defense')
+
 from utils import args
 from utils.utils import save_checkpoint_optimizer, progress_bar, normalization
 from utils.network import get_network

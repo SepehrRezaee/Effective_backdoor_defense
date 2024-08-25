@@ -10,6 +10,10 @@ import csv
 from PIL import Image
 import pdb
 
+import sys
+
+sys.path.append('/kaggle/working/Effective_backdoor_defense')
+
 from utils import args
 from utils.utils import save_checkpoint, progress_bar, normalization
 from utils.network import get_network

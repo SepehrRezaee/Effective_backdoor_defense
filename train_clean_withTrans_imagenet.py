@@ -8,6 +8,10 @@ from torch import nn
 import torchvision.transforms as transforms
 import csv
 
+import sys
+
+sys.path.append('/kaggle/working/Effective_backdoor_defense')
+
 from utils import args
 from utils.utils import save_checkpoint_optimizer, progress_bar
 from utils.dataloader import get_dataloader
