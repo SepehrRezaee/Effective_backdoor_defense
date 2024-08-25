@@ -1,5 +1,10 @@
 import numpy as np
 from matplotlib import pyplot as plt
+
+import sys
+
+sys.path.append('/kaggle/working/Effective_backdoor_defense')
+
 from utils import args
 
 global arg
