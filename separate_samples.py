@@ -27,7 +27,7 @@ def separate_samples(arg, trainloader, model, gamma_low, gamma_high):
             print("Processing samples:", i)
         inputs1, inputs2 = inputs[0], inputs[2]
 
-        ### Prepare for saved ###
+        ### Prepare for saving ###
         img = inputs1
         img = img.squeeze()
         target = labels.squeeze()
@@ -45,7 +45,6 @@ def separate_samples(arg, trainloader, model, gamma_low, gamma_high):
 
         ### Compare consistency ###
         feature_consistency = torch.mean((features1 - features2)**2, dim=1)
-        # feature_consistency = feature_consistency.detach().cpu().numpy()
 
         ### Separate samples ###
         if feature_consistency.item() <= gamma_low:
@@ -59,15 +58,23 @@ def separate_samples(arg, trainloader, model, gamma_low, gamma_high):
             suspicious_samples.append((img, target, flag))
 
     ### Save samples ###
-    folder_path = os.path.join('./saved/separated_samples', 'poison_rate_'+str(arg.poison_rate), arg.dataset, arg.model, arg.trigger_type+'_'+str(arg.clean_ratio)+'_'+str(arg.poison_ratio))
+    folder_path = os.path.join('./saved/separated_samples', 
+                               f'poison_rate_{arg.poison_rate}', 
+                               arg.dataset, 
+                               arg.model, 
+                               f'{arg.trigger_type}_{arg.clean_ratio}_{arg.poison_ratio}')
+    
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
+    
     data_path_clean = os.path.join(folder_path, 'clean_samples.npy')
     data_path_poison = os.path.join(folder_path, 'poison_samples.npy')
     data_path_suspicious = os.path.join(folder_path, 'suspicious_samples.npy')
-    np.save(data_path_clean, clean_samples)
-    np.save(data_path_poison, poison_samples)
-    np.save(data_path_suspicious, suspicious_samples)
+    
+    # Save as object arrays (with allow_pickle=True)
+    np.save(data_path_clean, np.array(clean_samples, dtype=object), allow_pickle=True)
+    np.save(data_path_poison, np.array(poison_samples, dtype=object), allow_pickle=True)
+    np.save(data_path_suspicious, np.array(suspicious_samples, dtype=object), allow_pickle=True)
 
 
 def main():
