@@ -18,6 +18,10 @@ import torchvision
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 
+import sys
+
+sys.path.append('/kaggle/working/Effective_backdoor_defense')
+
 from utils import args
 # from utils.SSBA.encode_image import bd_generator # if you run SSBA attack, please use this line
 from utils.network import get_network
